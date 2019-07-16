@@ -4,7 +4,7 @@ import numpy as np
 import time
 
 LONG = 6                    #总长度为6
-MAZE_PLACE = 4              #宝藏在第四位
+MAZE_PLACE = 6              #宝藏在第6位
 TIMES = 15                  #进行15次迭代
 
 people = QL(['left','right'])       #生成QLearn主体的对象，包含left和right
@@ -22,11 +22,12 @@ for episode in range(TIMES):
             time.sleep(2)
             break
         action = people.choose_action(state)                        #获得下一步方向
-        state_after,score,pre_done = site.get_prediction(action)    #预测下一步的位置，下一步的成绩，下一步是否完成
-        people.learn(state,action,score,state_after,pre_done)       #根据预测结果进行学习
+        state_after,score,pre_done = site.get_target(action)    #获得下一步的环境的实际情况
+        people.learn(state,action,score,state_after,pre_done)       #根据所处的当前环境对各个动作的预测得分和下一步的环境的实际情况更新当前环境的q表
         site.update_place(action)                                   #更新位置
         state = state_after                                         #状态更新
         site.draw()                                                 #更新画布
         time.sleep(0.3)
+    
 
-
+print(people.q_table)
