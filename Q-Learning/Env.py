@@ -45,8 +45,8 @@ class Env:
             if self.x > 0:
                 self.x -= 1
 
-    def get_prediction(self,action):
-        if action == 'right':                        #获得预测位置，并获得在预测位置是否拿到宝藏
+    def get_target(self,action):
+        if action == 'right':                        #获得下一步的环境的实际情况
             if self.x + 1 == self.maze_column:
                 score = 1
                 pre_done = True
